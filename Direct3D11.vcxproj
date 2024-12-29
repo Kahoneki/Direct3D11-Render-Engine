@@ -128,7 +128,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Managers\DeviceManager.cpp" />
+    <ClCompile Include="Managers\EngineManager.cpp" />
+    <ClCompile Include="Managers\PipelineManager.cpp" />
+    <ClCompile Include="Managers\RenderManager.cpp" />
+    <ClCompile Include="Managers\ResourceManager.cpp" />
+    <ClCompile Include="Managers\WindowManager.cpp" />
     <ClCompile Include="program.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Managers\DeviceManager.h" />
+    <ClInclude Include="Managers\EngineManager.h" />
+    <ClInclude Include="Managers\PipelineManager.h" />
+    <ClInclude Include="Managers\RenderManager.h" />
+    <ClInclude Include="Managers\ResourceManager.h" />
+    <ClInclude Include="Managers\WindowManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

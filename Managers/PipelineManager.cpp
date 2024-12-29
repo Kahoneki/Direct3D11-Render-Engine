@@ -1,5 +1,7 @@
 ﻿#include "PipelineManager.h"
 
+#include <iostream>
+
 #include "DeviceManager.h"
 #include "EngineManager.h"
 
@@ -65,16 +67,30 @@ void PipelineManager::ClearDepthStencilView(ID3D11DepthStencilView* depthStencil
 //--------------------------------//
 //---------Buffer Methods---------//
 //--------------------------------//
-void PipelineManager::BindVertexBuffer(ID3D11Buffer* vertexBuffer)
+void PipelineManager::BindVertexBuffer(ID3D11Buffer* vertexBuffer, UINT stride, UINT offset)
 {
+    DeviceManager::context->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
 }
 
-void PipelineManager::BindIndexBuffer(ID3D11Buffer* indexBuffer)
+void PipelineManager::BindIndexBuffer(ID3D11Buffer* indexBuffer, DXGI_FORMAT format, UINT offset)
 {
+    DeviceManager::context->IASetIndexBuffer(indexBuffer, format, offset);
 }
 
-void PipelineManager::BindConstantBuffer(ID3D11Buffer* constantBuffer)
+void PipelineManager::BindConstantBuffer(PIPELINE_STAGE stage, UINT slot, ID3D11Buffer* constantBuffer)
 {
+    if (stage == PIPELINE_STAGE::VERTEX_SHADER)
+    {
+        DeviceManager::context->VSSetConstantBuffers(slot, 1, &constantBuffer);
+    }
+    else if (stage == PIPELINE_STAGE::PIXEL_SHADER)
+    {
+        DeviceManager::context->PSSetConstantBuffers(slot, 1, &constantBuffer);
+    }
+    else
+    {
+        std::cerr << "ERROR::PIPELINE_MANAGER::BIND_CONSTANT_BUFFER::STAGE_MUST_BE_VERTEX_OR_PIXEL" << std::endl;
+    }
 }
 //---------------------------------//
 //------End of Buffer Methods------//

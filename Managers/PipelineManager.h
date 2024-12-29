@@ -2,6 +2,17 @@
 #include <d3d11.h>
 #include <vector>
 
+
+enum PIPELINE_STAGE
+{
+    VERTEX_SHADER,
+    DOMAIN_SHADER,
+    HULL_SHADER,
+    GEOMETRY_SHADER,
+    PIXEL_SHADER,
+};
+
+
 class PipelineManager
 {
     friend class EngineManager;
@@ -22,9 +33,9 @@ public:
 
     
     //----Buffer Methods----//
-    static void BindVertexBuffer(ID3D11Buffer* vertexBuffer);
-    static void BindIndexBuffer(ID3D11Buffer* indexBuffer);
-    static void BindConstantBuffer(ID3D11Buffer* constantBuffer);
+    static void BindVertexBuffer(ID3D11Buffer* vertexBuffer, UINT stride, UINT offset=0);
+    static void BindIndexBuffer(ID3D11Buffer* indexBuffer, DXGI_FORMAT format=DXGI_FORMAT_R32_UINT, UINT offset=0);
+    static void BindConstantBuffer(PIPELINE_STAGE stage, UINT slot, ID3D11Buffer* constantBuffer);
     
 private:
     static void Initialise();

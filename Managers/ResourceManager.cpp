@@ -25,6 +25,10 @@ void ResourceManager::Shutdown()
     {
         v->Release();
     }
+    for (ID3D11SamplerState* s : samplerStates)
+    {
+        s->Release();
+    }
 }
 
 
@@ -945,3 +949,24 @@ ID3D11UnorderedAccessView* ResourceManager::CreateTexture3DUnorderedAccessView(I
 //----------------------------------------------//
 //-------------END OF VIEW CREATION-------------//
 //----------------------------------------------//
+
+
+
+//----------------------------------------------//
+//---------------SAMPLER CREATION---------------//
+//----------------------------------------------//
+ID3D11SamplerState* ResourceManager::CreateSamplerState(D3D11_SAMPLER_DESC samplerDesc)
+{
+    ID3D11SamplerState* ss;
+    HRESULT hr{ DeviceManager::device->CreateSamplerState(&samplerDesc, &ss) };
+    if (FAILED(hr))
+    {
+        std::cerr << "ERROR::RESOURCE_MANAGER::CREATE_SAMPLER_STATE::FAILED_TO_CREATE_SAMPLER_STATE" << std::endl;
+        return nullptr;
+    }
+    samplerStates.push_back(ss);
+    return ss;
+}
+//---------------------------------------------//
+//-----------END OF SAMPLER CREATION-----------//
+//---------------------------------------------//
